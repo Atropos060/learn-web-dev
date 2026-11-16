@@ -3,24 +3,370 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Выбор даты и времени</title>
+    <title>Выбор даты и времени — Онлайн-запись</title>
     <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
   </head>
-  <body>
-    <!--
-      ЗАДАНИЕ
-      ========
-      Сверстать страницу выбора даты и времени по своему макету.
+  <body class="page-body">
+    <div class="page-wrapper">
+      <!-- Шапка сайта (макет, стр. 1) -->
+      <header class="site-header">
+        <div class="header-container">
+          <a href="#" class="logo-link">
+            <span class="logo-text">LOGO</span>
+          </a>
+          <nav class="main-navigation" aria-label="Основное меню">
+            <ul class="nav-list">
+              <li class="nav-item">
+                <a href="#" class="nav-link">Услуги</a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">Галерея</a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">Команда</a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">Отзывы</a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">Контакты</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </header>
 
-      Пока это только вёрстка. Никакого JavaScript — ни кликов,
-      ни переходов, ни выбора дня. Всё статично.
+      <!-- Основная область страницы (макет, стр. 8) -->
+      <main class="page-main">
+        <div class="main-container">
+          <!-- Индикатор шагов оформления записи -->
+          <section class="stepper-section" aria-label="Шаги оформления записи">
+            <ol class="stepper-list">
+              <li class="stepper-step completed">
+                <div class="step-circle" aria-label="Шаг 1: выполнен">1</div>
+                <span class="step-title">Услуга</span>
+              </li>
+              <li class="step-divider completed" aria-hidden="true"></li>
 
-      Стили пишите в styles.css. Разметку — здесь.
-    -->
+              <li class="stepper-step completed">
+                <div class="step-circle" aria-label="Шаг 2: выполнен">2</div>
+                <span class="step-title">Мастер</span>
+              </li>
+              <li class="step-divider completed" aria-hidden="true"></li>
 
-    <div class="page">
-      <!-- Начните отсюда. Разметьте шапку, основную область
-           с календарём и слотами, подвал. -->
+              <li class="stepper-step active" aria-current="step">
+                <div class="step-circle" aria-label="Шаг 3: текущий">3</div>
+                <span class="step-title">Дата и время</span>
+              </li>
+              <li class="step-divider" aria-hidden="true"></li>
+
+              <li class="stepper-step pending">
+                <div class="step-circle" aria-label="Шаг 4">4</div>
+                <span class="step-title">Данные</span>
+              </li>
+              <li class="step-divider" aria-hidden="true"></li>
+
+              <li class="stepper-step pending">
+                <div class="step-circle" aria-label="Шаг 5">5</div>
+                <span class="step-title">Подтверждение</span>
+              </li>
+            </ol>
+          </section>
+
+          <!-- Заголовок страницы -->
+          <section class="heading-section">
+            <span class="category-badge">Онлайн-запись</span>
+            <h1 class="page-title">Выбор даты и времени</h1>
+          </section>
+
+          <!-- Две основные панели: Календарь и Доступное время -->
+          <section class="booking-section" aria-label="Выбор даты и времени записи">
+            <div class="booking-grid">
+              <!-- Карточка 1: Календарь -->
+              <article class="booking-card calendar-card">
+                <div class="calendar-header">
+                  <h2 class="month-title">Июнь 2025</h2>
+                  <div class="calendar-controls">
+                    <button
+                      type="button"
+                      class="nav-arrow-btn"
+                      aria-label="Предыдущий месяц"
+                    >
+                      <svg
+                        class="arrow-icon"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                      </svg>
+                    </button>
+                    <button
+                      type="button"
+                      class="nav-arrow-btn"
+                      aria-label="Следующий месяц"
+                    >
+                      <svg
+                        class="arrow-icon"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="calendar-table">
+                  <div class="weekdays-row" aria-hidden="true">
+                    <span class="weekday">Пн</span>
+                    <span class="weekday">Вт</span>
+                    <span class="weekday">Ср</span>
+                    <span class="weekday">Чт</span>
+                    <span class="weekday">Пт</span>
+                    <span class="weekday">Сб</span>
+                    <span class="weekday">Вс</span>
+                  </div>
+
+                  <div class="days-container">
+                    <!-- Неделя 1 -->
+                    <div class="week-row">
+                      <div class="day-cell other-month">26</div>
+                      <div class="day-cell other-month">27</div>
+                      <div class="day-cell other-month">28</div>
+                      <div class="day-cell other-month">29</div>
+                      <div class="day-cell other-month">30</div>
+                      <div class="day-cell other-month">31</div>
+                      <button type="button" class="day-cell">1</button>
+                    </div>
+
+                    <!-- Неделя 2 -->
+                    <div class="week-row">
+                      <button type="button" class="day-cell">2</button>
+                      <button type="button" class="day-cell">3</button>
+                      <button type="button" class="day-cell">4</button>
+                      <button type="button" class="day-cell">5</button>
+                      <button type="button" class="day-cell">6</button>
+                      <button type="button" class="day-cell">7</button>
+                      <button type="button" class="day-cell">8</button>
+                    </div>
+
+                    <!-- Неделя 3 -->
+                    <div class="week-row">
+                      <button type="button" class="day-cell">9</button>
+                      <button type="button" class="day-cell">10</button>
+                      <button type="button" class="day-cell">11</button>
+                      <button type="button" class="day-cell">12</button>
+                      <button type="button" class="day-cell">13</button>
+                      <button type="button" class="day-cell">14</button>
+                      <button type="button" class="day-cell">15</button>
+                    </div>
+
+                    <!-- Неделя 4 (выбран день 17) -->
+                    <div class="week-row">
+                      <button type="button" class="day-cell">16</button>
+                      <button
+                        type="button"
+                        class="day-cell selected"
+                        aria-pressed="true"
+                      >
+                        17
+                      </button>
+                      <button type="button" class="day-cell">18</button>
+                      <button type="button" class="day-cell">19</button>
+                      <button type="button" class="day-cell">20</button>
+                      <button type="button" class="day-cell">21</button>
+                      <button type="button" class="day-cell">22</button>
+                    </div>
+
+                    <!-- Неделя 5 -->
+                    <div class="week-row">
+                      <button type="button" class="day-cell">23</button>
+                      <button type="button" class="day-cell">24</button>
+                      <button type="button" class="day-cell">25</button>
+                      <button type="button" class="day-cell">26</button>
+                      <button type="button" class="day-cell">27</button>
+                      <button type="button" class="day-cell">28</button>
+                      <button type="button" class="day-cell">29</button>
+                    </div>
+
+                    <!-- Неделя 6 -->
+                    <div class="week-row">
+                      <button type="button" class="day-cell">30</button>
+                      <div class="day-cell other-month">1</div>
+                      <div class="day-cell other-month">2</div>
+                      <div class="day-cell other-month">3</div>
+                      <div class="day-cell other-month">4</div>
+                      <div class="day-cell other-month">5</div>
+                      <div class="day-cell other-month">6</div>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Карточка 2: Доступное время -->
+              <article class="booking-card time-card">
+                <h2 class="time-title">Доступное время</h2>
+                <div class="time-grid">
+                  <!-- Свободный слот 10:00 -->
+                  <button type="button" class="time-slot">
+                    <span class="slot-text">10:00</span>
+                  </button>
+
+                  <!-- Занятый слот 11:00 -->
+                  <button
+                    type="button"
+                    class="time-slot unavailable"
+                    disabled
+                    aria-disabled="true"
+                  >
+                    <span class="slot-text">11:00</span>
+                    <span class="slot-status">Занято</span>
+                  </button>
+
+                  <!-- Свободный слот 12:00 -->
+                  <button type="button" class="time-slot">
+                    <span class="slot-text">12:00</span>
+                  </button>
+
+                  <!-- Занятый слот 13:00 -->
+                  <button
+                    type="button"
+                    class="time-slot unavailable"
+                    disabled
+                    aria-disabled="true"
+                  >
+                    <span class="slot-text">13:00</span>
+                    <span class="slot-status">Занято</span>
+                  </button>
+
+                  <!-- Выбранный слот 14:00 -->
+                  <button
+                    type="button"
+                    class="time-slot selected"
+                    aria-pressed="true"
+                  >
+                    <span class="slot-text">14:00</span>
+                  </button>
+
+                  <!-- Свободный слот 15:00 -->
+                  <button type="button" class="time-slot">
+                    <span class="slot-text">15:00</span>
+                  </button>
+
+                  <!-- Свободный слот 16:00 -->
+                  <button type="button" class="time-slot">
+                    <span class="slot-text">16:00</span>
+                  </button>
+
+                  <!-- Свободный слот 17:00 -->
+                  <button type="button" class="time-slot">
+                    <span class="slot-text">17:00</span>
+                  </button>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <!-- Нижняя панель действий -->
+          <section class="bottom-action-panel" aria-label="Панель подтверждения выбора">
+            <div class="selected-details">
+              <span class="details-label">Выбранная дата и время:</span>
+              <span class="details-value">Вторник, 17 июня 2025 • 14:00</span>
+            </div>
+            <button type="button" class="btn-next">Далее</button>
+          </section>
+        </div>
+      </main>
+
+      <!-- Подвал сайта (макет, стр. 2) -->
+      <footer class="site-footer">
+        <div class="footer-container">
+          <div class="footer-columns">
+            <!-- Бренд и описание -->
+            <div class="footer-column brand-column">
+              <span class="footer-logo">LOGO</span>
+              <p class="footer-description">Дружелюбное описание услуг</p>
+            </div>
+
+            <!-- Контакты -->
+            <div class="footer-column contacts-column">
+              <h3 class="footer-heading">Контакты</h3>
+              <div class="contact-entry">
+                <svg
+                  class="contact-icon"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"
+                  ></path>
+                  <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+                <span class="contact-text">ул. Садовая, 15, Москва</span>
+              </div>
+              <div class="contact-entry">
+                <svg
+                  class="contact-icon"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
+                  ></path>
+                </svg>
+                <a href="tel:+74951234567" class="contact-link"
+                  >+7 (495) 123-45-67</a
+                >
+              </div>
+            </div>
+
+            <!-- Режим работы -->
+            <div class="footer-column hours-column">
+              <h3 class="footer-heading">Режим работы</h3>
+              <p class="hours-text">Пн–Пт: 9:00 – 21:00</p>
+              <p class="hours-text">Сб–Вс: 10:00 – 19:00</p>
+            </div>
+          </div>
+
+          <div class="footer-separator"></div>
+
+          <!-- Нижняя полоса копирайта -->
+          <div class="footer-bottom">
+            <span class="copyright-text">© 2026. Все права защищены.</span>
+            <a href="#" class="privacy-link">Политика конфиденциальности</a>
+          </div>
+        </div>
+      </footer>
     </div>
   </body>
 </html>

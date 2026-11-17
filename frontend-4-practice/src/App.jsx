@@ -39,6 +39,11 @@ function App() {
   // Счётчик для повторной попытки загрузки today при ошибке
   const [retryCount, setRetryCount] = useState(0);
 
+  // Счётчик для повторной попытки загрузки слотов.
+  // Увеличивается кнопкой «Повторить» и запускает тот же эффект,
+  // что и обычная загрузка, — отдельного запроса нет.
+  const [retrySlotsCount, setRetrySlotsCount] = useState(0);
+
   // ==========================================================================
   // 1. Загрузка today при открытии страницы
   // ==========================================================================
@@ -85,6 +90,8 @@ function App() {
       selectedMonth === null ||
       selectedYear === null
     ) {
+      // Даты нет — запрашивать слоты не нужно.
+      // Состояние загрузки сбрасывает обработчик смены месяца.
       return;
     }
 
@@ -100,15 +107,18 @@ function App() {
           year: selectedYear,
         });
 
-        // Защита от race condition: проверяем, что ответ совпадает с выбранным днем
-        if (
-          !ignore &&
+        if (ignore) return;
+
+        // Защита от race condition: сверяем дату из ответа
+        // с актуально выбранным днём.
+        const isActual =
           response &&
           response.date &&
           response.date.day === selectedDay &&
           response.date.month === selectedMonth &&
-          response.date.year === selectedYear
-        ) {
+          response.date.year === selectedYear;
+
+        if (isActual) {
           setSlots(response.slots || []);
         }
       } catch (err) {
@@ -127,7 +137,7 @@ function App() {
     return () => {
       ignore = true;
     };
-  }, [selectedDay, selectedMonth, selectedYear]);
+  }, [selectedDay, selectedMonth, selectedYear, retrySlotsCount]);
 
   // ==========================================================================
   // 3. Обработчики действий пользователя
@@ -148,46 +158,54 @@ function App() {
     setSelectedTime(time);
   }
 
+  // Переключение месяца синхронизирует календарь:
+  // выбранная дата и время сбрасываются, слоты очищаются,
+  // так как для нового месяца день ещё не выбран.
+  function changeMonth(direction) {
+    let nextMonth = currentMonth + direction;
+    let nextYear = currentYear;
+
+    if (nextMonth < 0) {
+      nextMonth = 11;
+      nextYear -= 1;
+    } else if (nextMonth > 11) {
+      nextMonth = 0;
+      nextYear += 1;
+    }
+
+    setCurrentMonth(nextMonth);
+    setCurrentYear(nextYear);
+
+    // Сброс выбранной даты
+    setSelectedDay(null);
+    setSelectedMonth(nextMonth);
+    setSelectedYear(nextYear);
+
+    // Сброс выбранного времени
+    setSelectedTime(null);
+
+    // Сброс слотов и их состояния
+    setSlots([]);
+    setLoadingSlots(false);
+    setErrorSlots(null);
+  }
+
   // Навигация по месяцам назад
   function handlePrevMonth() {
-    if (currentMonth === 0) {
-      setCurrentMonth(11);
-      setCurrentYear(currentYear - 1);
-    } else {
-      setCurrentMonth(currentMonth - 1);
-    }
+    changeMonth(-1);
   }
 
   // Навигация по месяцам вперед
   function handleNextMonth() {
-    if (currentMonth === 11) {
-      setCurrentMonth(0);
-      setCurrentYear(currentYear + 1);
-    } else {
-      setCurrentMonth(currentMonth + 1);
-    }
+    changeMonth(1);
   }
 
-  // Повторная загрузка слотов
+  // Повторная загрузка слотов.
+  // Сам запрос выполняет основной эффект — здесь только
+  // увеличиваем счётчик, чтобы эффект запустился заново
+  // и защитил ответ от устаревших данных.
   function handleRetrySlots() {
-    if (selectedDay === null) return;
-    const targetDate = {
-      day: selectedDay,
-      month: selectedMonth,
-      year: selectedYear,
-    };
-    setLoadingSlots(true);
-    setErrorSlots(null);
-    fetchSlots(targetDate)
-      .then((res) => {
-        setSlots(res.slots || []);
-      })
-      .catch((err) => {
-        setErrorSlots(err.message || "Ошибка загрузки слотов");
-      })
-      .finally(() => {
-        setLoadingSlots(false);
-      });
+    setRetrySlotsCount((count) => count + 1);
   }
 
   // Кнопка «Далее» в нижней панели
@@ -251,6 +269,7 @@ function App() {
                     error={errorSlots}
                     onTimeClick={handleTimeClick}
                     onRetry={handleRetrySlots}
+                    hasSelectedDay={selectedDay !== null}
                   />
                 </div>
               </section>

@@ -48,24 +48,43 @@ function App() {
     setSelectedTime(time);
   }
 
+  // Переключение месяца сбрасывает выбранную дату и время,
+  // а слоты очищает, так как для нового месяца день ещё не выбран.
+  function changeMonth(direction) {
+    let nextMonth = currentMonth + direction;
+    let nextYear = currentYear;
+
+    if (nextMonth < 0) {
+      nextMonth = 11;
+      nextYear -= 1;
+    } else if (nextMonth > 11) {
+      nextMonth = 0;
+      nextYear += 1;
+    }
+
+    setCurrentMonth(nextMonth);
+    setCurrentYear(nextYear);
+
+    // Сброс выбранной даты
+    setSelectedDay(null);
+    setSelectedMonth(nextMonth);
+    setSelectedYear(nextYear);
+
+    // Сброс выбранного времени
+    setSelectedTime(null);
+
+    // Слоты обновляются: без выбранного дня их нет
+    setSlots([]);
+  }
+
   // Навигация по месяцам назад
   function handlePrevMonth() {
-    if (currentMonth === 0) {
-      setCurrentMonth(11);
-      setCurrentYear(currentYear - 1);
-    } else {
-      setCurrentMonth(currentMonth - 1);
-    }
+    changeMonth(-1);
   }
 
   // Навигация по месяцам вперед
   function handleNextMonth() {
-    if (currentMonth === 11) {
-      setCurrentMonth(0);
-      setCurrentYear(currentYear + 1);
-    } else {
-      setCurrentMonth(currentMonth + 1);
-    }
+    changeMonth(1);
   }
 
   // Кнопка «Далее» в нижней панели
@@ -111,6 +130,7 @@ function App() {
                 slots={slots}
                 selectedTime={selectedTime}
                 onTimeClick={handleTimeClick}
+                hasSelectedDay={selectedDay !== null}
               />
             </div>
           </section>
